@@ -4,7 +4,7 @@ travel_guide_description = """
 Travel Guide RAG is a tool that provides recommendations and answers questions about cities, places, tourist destinations, activities, and attractions in Bolivia.
 - Input parameters: Query about tourism in Bolivia, recommendations of cities and places, a city, tourist attraction, or activity.
 - Output parameters: The provided output reformulated to fit the users query and answer it accurately using only the information provided.
-- Usage: This tool is used to fetch tourist information and offer suggestions to the user. Use only the data provided in the travel guide store.
+- Usage: This tool is used to fetch tourist information and offer suggestions to the user. Use only the data provided in the travel guide store and not prior knowledge.
 """
 
 # Prompt for Travel Guide QA
