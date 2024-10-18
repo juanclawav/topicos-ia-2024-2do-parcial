@@ -38,5 +38,37 @@
         "city": "Cochabamba",
         "cost": 534,
         "reservation_type": "HotelReservation"
+    },
+    {
+        "checkin_date": "2021-04-04",
+        "checkout_date": "2021-04-07",
+        "hotel_name": "Camino Real",
+        "city": "La Paz",
+        "cost": 382,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "trip_type": "BUS",
+        "date": "2023-12-15",
+        "departure": "La Paz",
+        "destination": " Cochabamba",
+        "cost": 32,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "trip_type": "BUS",
+        "date": "2023-02-02",
+        "departure": "La Paz",
+        "destination": "Cochabamba",
+        "cost": 45,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "trip_type": "BUS",
+        "date": "2023-10-06",
+        "departure": "La Paz",
+        "destination": "Cochabamba",
+        "cost": 32,
+        "reservation_type": "TripReservation"
     }
 ]

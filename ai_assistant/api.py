@@ -2,6 +2,10 @@ from fastapi import FastAPI, Depends, Query
 from llama_index.core.agent import ReActAgent
 from ai_assistant.agent import TravelAgent
 from ai_assistant.models import AgentAPIResponse
+from ai_assistant.tools import (
+    reserve_bus,
+    generate_trip_summary
+)
 
 
 def get_agent() -> ReActAgent:
@@ -13,7 +17,7 @@ app = FastAPI(title="AI Agent")
 
 @app.get("/recommendations/cities")
 def recommend_cities(
-    notes: list[str] = Query(...), agent: ReActAgent = Depends(get_agent)
+    notes: list[str] = Query(None), agent: ReActAgent = Depends(get_agent)
 ):
     prompt = f"recommend cities in bolivia with the following notes: {notes if notes else 'No specific notes'}"
     return AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
@@ -28,5 +32,5 @@ def reserve_bus_ticket(origin: str, destination: str, date: str):
     return {"status": "OK", "reservation": reservation.dict()}
 @app.get("/trip/report")
 def trip_report(agent: ReActAgent = Depends(get_agent)):
-    prompt = "Generate a detailed trip report from the trip log."
-    return AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
+    report = generate_trip_summary()
+    return AgentAPIResponse(status="OK", agent_response=report)
