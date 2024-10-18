@@ -15,5 +15,18 @@ app = FastAPI(title="AI Agent")
 def recommend_cities(
     notes: list[str] = Query(...), agent: ReActAgent = Depends(get_agent)
 ):
-    prompt = f"recommend cities in bolivia with the following notes: {notes}"
+    prompt = f"recommend cities in bolivia with the following notes: {notes if notes else 'No specific notes'}"
+    return AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
+@app.get("/recommendations/places")
+def recommend_places(city: str, notes: list[str] = Query(None), agent: ReActAgent = Depends(get_agent)):
+    
+    prompt = f"recommend places to visit in {city} with the following notes: {notes if notes else 'No specific notes'}"
+    return AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
+@app.post("/reserve/bus")
+def reserve_bus_ticket(origin: str, destination: str, date: str):
+    reservation = reserve_bus(date, origin, destination)
+    return {"status": "OK", "reservation": reservation.dict()}
+@app.get("/trip/report")
+def trip_report(agent: ReActAgent = Depends(get_agent)):
+    prompt = "Generate a detailed trip report from the trip log."
     return AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))

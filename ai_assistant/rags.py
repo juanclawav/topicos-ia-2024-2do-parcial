@@ -14,7 +14,7 @@ from ai_assistant.config import get_agent_settings
 
 SETTINGS = get_agent_settings()
 
-llm = OpenAI(model="gpt-4o-mini")
+llm = OpenAI(model="gpt-4o-mini", api_key=SETTINGS.OPENAI_API_KEY)
 embed_model = HuggingFaceEmbedding(model_name=SETTINGS.hf_embeddings_model)
 Settings.embed_model = embed_model
 Settings.llm = llm

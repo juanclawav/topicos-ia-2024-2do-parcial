@@ -30,5 +30,13 @@
         "destination": "Dallas",
         "cost": 401,
         "reservation_type": "TripReservation"
+    },
+    {
+        "checkin_date": "2023-10-28",
+        "checkout_date": "2023-10-31",
+        "hotel_name": "Hotel Casa Grande",
+        "city": "Cochabamba",
+        "cost": 534,
+        "reservation_type": "HotelReservation"
     }
 ]
