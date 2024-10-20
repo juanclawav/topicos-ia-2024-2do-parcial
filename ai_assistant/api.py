@@ -7,7 +7,6 @@ from ai_assistant.tools import (
     generate_trip_summary
 )
 
-
 def get_agent() -> ReActAgent:
     return TravelAgent().get_agent()
 
@@ -17,7 +16,7 @@ app = FastAPI(title="AI Agent")
 
 @app.get("/recommendations/cities")
 def recommend_cities(
-    notes: list[str] = Query(None), agent: ReActAgent = Depends(get_agent)
+    notes: list[str] = Query(...), agent: ReActAgent = Depends(get_agent)
 ):
     prompt = f"recommend cities in bolivia with the following notes: {notes if notes else 'No specific notes'}"
     return AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))

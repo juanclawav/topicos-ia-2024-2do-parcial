@@ -26,11 +26,18 @@ travel_guide_tool = QueryEngineTool(
     )
 )
 
-
 # Tool functions
 def reserve_flight(date_str: str, departure: str, destination: str) -> TripReservation:
     """
-    ===> COMPLETE DESCRIPTION HERE <===
+    Reserva un boleto de avión.
+    
+    Parámetros:
+    - date_str: Fecha del viaje (string, formato ISO).
+    - departure: Ciudad de origen.
+    - destination: Ciudad de destino.
+    
+    Retorno:
+    - TripReservation: Objeto con detalles de la reserva.
     """
     print(
         f"Making flight reservation from {departure} to {destination} on date: {date}"
@@ -170,11 +177,11 @@ def generate_trip_summary() -> str:
                 summary += f"- {activity_type} on {activity_date}:\n"
                 if activity_type == "TripReservation":
                     trip_type = details.get('trip_type', 'Unknown')
-                    summary += f"  🚗 {trip_type} from {details['departure']} to {details['destination']}, Cost: ${details['cost']}\n"
+                    summary += f"  {trip_type} from {details['departure']} to {details['destination']}, Cost: ${details['cost']}\n"
                 elif activity_type == "HotelReservation":
-                    summary += f"  🏨 Hotel {details['hotel_name']} from {details['checkin_date']} to {details['checkout_date']}, Cost: ${details['cost']}\n"
+                    summary += f"   Hotel {details['hotel_name']} from {details['checkin_date']} to {details['checkout_date']}, Cost: ${details['cost']}\n"
                 elif activity_type == "RestaurantReservation":
-                    summary += f"  🍽️ Restaurant {details['restaurant']} at {details['reservation_time']}, Cost: ${details['cost']}\n"
+                    summary += f"   Restaurant {details['restaurant']} at {details['reservation_time']}, Cost: ${details['cost']}\n"
 
             summary += "\n"
 
