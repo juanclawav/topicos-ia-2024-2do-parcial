@@ -29,15 +29,15 @@ travel_guide_tool = QueryEngineTool(
 # Tool functions
 def reserve_flight(date_str: str, departure: str, destination: str) -> TripReservation:
     """
-    Reserva un boleto de avión.
+    Reserves a plane ticket
     
-    Parámetros:
-    - date_str: Fecha del viaje (string, formato ISO).
-    - departure: Ciudad de origen.
-    - destination: Ciudad de destino.
+    Parameters:
+    - date_str: Date of the trip (string, ISO format).
+    - departure: City of departure.
+    - destination: City of destination.
     
-    Retorno:
-    - TripReservation: Objeto con detalles de la reserva.
+    Returns:
+    - TripReservation: Reerve details object.
     """
     print(
         f"Making flight reservation from {departure} to {destination} on date: {date}"
@@ -55,15 +55,15 @@ def reserve_flight(date_str: str, departure: str, destination: str) -> TripReser
 
 def reserve_bus(date_str: str, departure: str, destination: str) -> TripReservation:
     """
-    Reserva un boleto de bus.
+    Reserves a bus.
     
-    Parámetros:
-    - date_str: Fecha del viaje (string, formato ISO).
-    - departure: Ciudad de origen.
-    - destination: Ciudad de destino.
+    Parameters:
+    - date_str: Date of trip (string, ISO format).
+    - departure: Ciuty of departure.
+    - destination: City of destination.
     
-    Retorno:
-    - TripReservation: Objeto con detalles de la reserva.
+    Returns:
+    - TripReservation: Reservation details object.
     """
     print(f"Making bus reservation from {departure} to {destination} on date: {date_str}")
     reservation = TripReservation(
@@ -79,16 +79,17 @@ def reserve_bus(date_str: str, departure: str, destination: str) -> TripReservat
 
 def reserve_hotel(checkin_date_str: str, checkout_date_str: str, hotel_name: str, city: str) -> HotelReservation:
     """
-    Reserva una habitación de hotel.
-    
-    Parámetros:
-    - checkin_date_str: Fecha de check-in (string, formato ISO).
-    - checkout_date_str: Fecha de check-out (string, formato ISO).
-    - hotel_name: Nombre del hotel.
-    - city: Ciudad donde se encuentra el hotel.
-    
-    Retorno:
-    - HotelReservation: Objeto con detalles de la reserva.
+    Book a hotel room.
+
+    Parameters:
+
+    -checkin_date_str: Check-in date (string, ISO format).
+    -checkout_date_str: Check-out date (string, ISO format).
+    -hotel_name: Name of the hotel.
+    -city: City where the hotel is located.
+    Return:
+
+    HotelReservation: Object containing reservation details.
     """
     print(f"Making hotel reservation at {hotel_name} in {city} from {checkin_date_str} to {checkout_date_str}")
     reservation = HotelReservation(
@@ -105,16 +106,17 @@ def reserve_hotel(checkin_date_str: str, checkout_date_str: str, hotel_name: str
 
 def reserve_restaurant(reservation_time_str: str, restaurant: str, city: str, dish: str = None) -> RestaurantReservation:
     """
-    Reserva una mesa de un restaurante.
-    
-    Parámetros:
-    - reservation_time_str: Hora de la reserva (string, formato ISO).
-    - restaurant: Nombre del restaurante.
-    - city: Ciudad donde se encuentra el restaurante.
-    - dish: Nombre de la comida (opcional).
-    
-    Retorno:
-    - RestaurantReservation: Objeto con detalles de la reserva.
+    Book a restaurant table.
+
+    Parameters:
+
+    reservation_time_str: Reservation time (string, ISO format).
+    restaurant: Name of the restaurant.
+    city: City where the restaurant is located.
+    dish: Name of the dish (optional).
+    Return:
+
+    RestaurantReservation: Object containing reservation details.
     """
     print(f"Making restaurant reservation at {restaurant} in {city} at {reservation_time_str}")
     reservation = RestaurantReservation(

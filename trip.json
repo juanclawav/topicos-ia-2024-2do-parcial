@@ -70,5 +70,37 @@
         "destination": "Cochabamba",
         "cost": 32,
         "reservation_type": "TripReservation"
+    },
+    {
+        "checkin_date": "2023-01-01",
+        "checkout_date": "2023-01-01",
+        "hotel_name": "Casa Grande",
+        "city": "El Alto",
+        "cost": 979,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-31T00:29:55",
+        "restaurant": "Burger King",
+        "city": "Sucre",
+        "dish": "Water",
+        "cost": 21,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "trip_type": "FLIGHT",
+        "date": "2023-01-01",
+        "departure": "La Paz",
+        "destination": "El Alto",
+        "cost": 280,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "trip_type": "BUS",
+        "date": "2023-01-01",
+        "departure": "La Paz",
+        "destination": "El Alto",
+        "cost": 49,
+        "reservation_type": "TripReservation"
     }
 ]
