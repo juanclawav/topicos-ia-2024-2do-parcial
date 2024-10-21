@@ -4,6 +4,7 @@ from llama_index.core.tools import QueryEngineTool, FunctionTool, ToolMetadata
 from ai_assistant.rags import TravelGuideRAG
 from ai_assistant.prompts import travel_guide_qa_tpl, travel_guide_description
 from ai_assistant.config import get_agent_settings
+from llama_index.core.tools import FunctionTool
 import json
 from ai_assistant.models import (
     TripReservation,
@@ -11,7 +12,7 @@ from ai_assistant.models import (
     HotelReservation,
     RestaurantReservation,
 )
-from ai_assistant.utils import save_reservation
+from ai_assistant.utils import save_reservation, delete_all_reservations
 
 SETTINGS = get_agent_settings()
 
@@ -196,6 +197,11 @@ def generate_trip_summary() -> str:
     except json.JSONDecodeError:
         return "Error reading the trip log file. It may be corrupted."
     
+def delete_reservations():
+    """
+    Elimina todos los registros del archivo trip.json.
+    """
+    delete_all_reservations()
 
 
 def generate_itinerary(budget: int, start_date_str: str, days: int) -> dict:
@@ -221,16 +227,13 @@ def generate_itinerary(budget: int, start_date_str: str, days: int) -> dict:
     from ai_assistant.models import AgentAPIResponse
     from fastapi import FastAPI, Depends, Query
 
-    
-    
-     
-
     start_date = datetime.fromisoformat(start_date_str)
     current_budget = budget
     itinerary = []
     
     # Consultar al travel guide para obtener ciudades y recomendaciones
     agent = ReActAgent.from_tools([travel_guide_tool], verbose=False)
+    delete_all_reservations()
     prompt = f"Recommend cities to visit in Bolivia, only city names no details, do not suggest La Paz, list them like this: Ciudad:(Name of city)  "
     travel_guide_response = AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
    
@@ -261,14 +264,22 @@ def generate_itinerary(budget: int, start_date_str: str, days: int) -> dict:
             if current_budget > 200:
                 flight_reservation = reserve_flight(date_str=current_date.strftime('%Y-%m-%d'), departure="La Paz", destination=city)
                 current_budget -= flight_reservation.cost
-                itinerary.append(f"Vuelo hacia {city} el {current_date.strftime('%Y-%m-%d')}, Costo: {flight_reservation.cost}")
+                itinerary.append(f"Vuelo hacia La Paz el {current_date.strftime('%Y-%m-%d')}, Costo: {flight_reservation.cost}")
             else:
-                bus_reservation = reserve_bus(date_str=current_date.strftime('%Y-%m-%d'), departure="Oruro", destination=city)
+                bus_reservation = reserve_bus(date_str=current_date.strftime('%Y-%m-%d'), departure="La Paz", destination=city)
                 current_budget -= bus_reservation.cost
-                itinerary.append(f"Bus hacia {city} el {current_date.strftime('%Y-%m-%d')}, Costo: {bus_reservation.cost}")
-        
+                itinerary.append(f"Bus hacia La Paz el {current_date.strftime('%Y-%m-%d')}, Costo: {bus_reservation.cost}")
+        if i == days - 1:
+            if current_budget > 200:
+                flight_reservation = reserve_flight(date_str=current_date.strftime('%Y-%m-%d'), departure=city, destination="La Paz")
+                current_budget -= flight_reservation.cost
+                itinerary.append(f"Vuelo de {city} hacia La Paz el {current_date.strftime('%Y-%m-%d')}, Costo: {flight_reservation.cost}")
+            else:
+                bus_reservation = reserve_bus(date_str=current_date.strftime('%Y-%m-%d'), departure=city, destination="La Paz")
+                current_budget -= bus_reservation.cost
+                itinerary.append(f"Bus de {city} hacia La Paz el {current_date.strftime('%Y-%m-%d')}, Costo: {bus_reservation.cost}")
         # Reservar hotel si hay disponibilidad y presupuesto
-        if hotels and current_budget > 100:
+        if hotels and current_budget > 100 and i < days - 1:
             hotel_name = hotels[0]  # Tomar el primer hotel recomendado
             hotel_reservation = reserve_hotel(
                 checkin_date_str=current_date.strftime('%Y-%m-%d'), 
@@ -297,11 +308,18 @@ def generate_itinerary(budget: int, start_date_str: str, days: int) -> dict:
     
     # Retornar el itinerario y el costo total
     total_cost = budget - current_budget
-    return {
+    if(total_cost > 0):
+        return {
         "itinerary": itinerary,
         "total_cost": total_cost,
         "remaining_budget": current_budget
-    }
+        }
+    else:
+         delete_all_reservations()
+         return {
+        "Cost exceeds budget"
+        }
+        
 
 def extract_cities_from_response(response: str) -> list:
     """
@@ -349,3 +367,4 @@ hotel_tool = FunctionTool.from_defaults(fn=reserve_hotel, return_direct=False)
 restaurant_tool = FunctionTool.from_defaults(fn=reserve_restaurant, return_direct=False)
 trip_summary_tool = FunctionTool.from_defaults(fn=generate_trip_summary, return_direct=False)
 trip_planner_tool = FunctionTool.from_defaults(fn=generate_itinerary, return_direct=False)
+delete_reservations_tool = FunctionTool.from_defaults(fn=delete_reservations, return_direct=False)

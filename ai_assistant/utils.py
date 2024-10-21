@@ -39,3 +39,13 @@ def save_reservation(
         json.dump(reservations, file, indent=4, default=custom_serializer)
 
     print(f"saved reservation!")
+
+def delete_all_reservations():
+    try:
+        with open(SETTINGS.log_file, 'w') as file:
+            json.dump([], file)  # Escribir una lista vacía para vaciar los registros
+        print("All reservations have been deleted.")
+    except FileNotFoundError:
+        print("The trip log file (trip.json) was not found.")
+    except Exception as e:
+        print(f"An error occurred while deleting reservations: {str(e)}")

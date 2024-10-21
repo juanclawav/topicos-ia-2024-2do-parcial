@@ -7,7 +7,8 @@ from ai_assistant.tools import (
     bus_tool,      # <-- Añadir
     restaurant_tool, # <-- Añadir
     trip_summary_tool,
-    trip_planner_tool
+    trip_planner_tool,
+    delete_reservations_tool
 )
 
 
@@ -21,7 +22,8 @@ class TravelAgent:
                 bus_tool,      # <-- Añadir
                 restaurant_tool,
                 trip_summary_tool,
-                trip_planner_tool
+                trip_planner_tool,
+                delete_reservations_tool
             ],
             verbose=True,
         )

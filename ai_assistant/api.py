@@ -7,7 +7,8 @@ from ai_assistant.tools import (
     reserve_bus,
     reserve_hotel,
     reserve_restaurant,
-    reserve_flight
+    reserve_flight,
+    delete_all_reservations
 
 )
 
@@ -81,3 +82,8 @@ def trip_summary(agent: ReActAgent = Depends(get_agent)):
         status="OK",
         agent_response=str(response)
     )
+
+@app.delete("/trip/delete-all")
+def delete_all_trip_reservations():
+    delete_all_reservations()
+    return {"status": "success", "message": "All trip reservations have been deleted."}
