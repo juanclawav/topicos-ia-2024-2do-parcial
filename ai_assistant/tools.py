@@ -264,11 +264,11 @@ def generate_itinerary(budget: int, start_date_str: str, days: int) -> dict:
             if current_budget > 200:
                 flight_reservation = reserve_flight(date_str=current_date.strftime('%Y-%m-%d'), departure="La Paz", destination=city)
                 current_budget -= flight_reservation.cost
-                itinerary.append(f"Vuelo hacia La Paz el {current_date.strftime('%Y-%m-%d')}, Costo: {flight_reservation.cost}")
+                itinerary.append(f"Vuelo desde La Paz hacia {city}]el {current_date.strftime('%Y-%m-%d')}, Costo: {flight_reservation.cost}")
             else:
                 bus_reservation = reserve_bus(date_str=current_date.strftime('%Y-%m-%d'), departure="La Paz", destination=city)
                 current_budget -= bus_reservation.cost
-                itinerary.append(f"Bus hacia La Paz el {current_date.strftime('%Y-%m-%d')}, Costo: {bus_reservation.cost}")
+                itinerary.append(f"Bus desde La Paz hacia  {city} el {current_date.strftime('%Y-%m-%d')}, Costo: {bus_reservation.cost}")
         if i == days - 1:
             if current_budget > 200:
                 flight_reservation = reserve_flight(date_str=current_date.strftime('%Y-%m-%d'), departure=city, destination="La Paz")
