@@ -102,5 +102,261 @@
         "destination": "El Alto",
         "cost": 49,
         "reservation_type": "TripReservation"
+    },
+    {
+        "trip_type": "FLIGHT",
+        "date": "2023-10-20",
+        "departure": "La Paz",
+        "destination": "Santa Cruz",
+        "cost": 338,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "trip_type": "FLIGHT",
+        "date": "2023-10-20",
+        "departure": "La Paz",
+        "destination": "Santa Cruz",
+        "cost": 244,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "checkin_date": "2023-10-20",
+        "checkout_date": "2023-10-21",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 454,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-20T00:00:00",
+        "restaurant": "- La Casa del Camba",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 24,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-21",
+        "checkout_date": "2023-10-22",
+        "hotel_name": "- Hotel Boutique La Posada",
+        "city": "Sucre",
+        "cost": 191,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-21T00:00:00",
+        "restaurant": "- La Taverne",
+        "city": "Sucre",
+        "dish": "Especialidad del chef",
+        "cost": 24,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-22",
+        "checkout_date": "2023-10-23",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 892,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-22T00:00:00",
+        "restaurant": "- La Casa del Camba",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 43,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-23",
+        "checkout_date": "2023-10-24",
+        "hotel_name": "- Hotel Boutique La Posada",
+        "city": "Sucre",
+        "cost": 890,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-23T00:00:00",
+        "restaurant": "- La Taverne",
+        "city": "Sucre",
+        "dish": "Especialidad del chef",
+        "cost": 38,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-24",
+        "checkout_date": "2023-10-25",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 285,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "trip_type": "FLIGHT",
+        "date": "2023-10-20",
+        "departure": "La Paz",
+        "destination": "Santa Cruz",
+        "cost": 382,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "checkin_date": "2023-10-20",
+        "checkout_date": "2023-10-21",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 653,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-20T00:00:00",
+        "restaurant": "- La Casa del Camba",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 40,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-21",
+        "checkout_date": "2023-10-22",
+        "hotel_name": "- Hotel Boutique La Posada",
+        "city": "Sucre",
+        "cost": 312,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-21T00:00:00",
+        "restaurant": "- La Taverne",
+        "city": "Sucre",
+        "dish": "Especialidad del chef",
+        "cost": 29,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-22",
+        "checkout_date": "2023-10-23",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 500,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-22T00:00:00",
+        "restaurant": "- La Casa del Camba",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 16,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-23",
+        "checkout_date": "2023-10-24",
+        "hotel_name": "- Hotel Boutique La Posada",
+        "city": "Sucre",
+        "cost": 419,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-23T00:00:00",
+        "restaurant": "- La Taverne",
+        "city": "Sucre",
+        "dish": "Especialidad del chef",
+        "cost": 44,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-24",
+        "checkout_date": "2023-10-25",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 528,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "trip_type": "FLIGHT",
+        "date": "2023-10-20",
+        "departure": "La Paz",
+        "destination": "Santa Cruz",
+        "cost": 215,
+        "reservation_type": "TripReservation"
+    },
+    {
+        "checkin_date": "2023-10-20",
+        "checkout_date": "2023-10-21",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 360,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-20T00:00:00",
+        "restaurant": "- El Aljibe",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 47,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-21",
+        "checkout_date": "2023-10-22",
+        "hotel_name": "- Hotel Boutique La Posada",
+        "city": "Sucre",
+        "cost": 727,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-21T00:00:00",
+        "restaurant": "- La Taverne",
+        "city": "Sucre",
+        "dish": "Especialidad del chef",
+        "cost": 13,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-22",
+        "checkout_date": "2023-10-23",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 320,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-22T00:00:00",
+        "restaurant": "- El Aljibe",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 18,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-23",
+        "checkout_date": "2023-10-24",
+        "hotel_name": "- Hotel Boutique La Posada",
+        "city": "Sucre",
+        "cost": 223,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-23T00:00:00",
+        "restaurant": "- La Taverne",
+        "city": "Sucre",
+        "dish": "Especialidad del chef",
+        "cost": 36,
+        "reservation_type": "RestaurantReservation"
+    },
+    {
+        "checkin_date": "2023-10-24",
+        "checkout_date": "2023-10-25",
+        "hotel_name": "- Hotel Copacabana",
+        "city": "Santa Cruz",
+        "cost": 555,
+        "reservation_type": "HotelReservation"
+    },
+    {
+        "reservation_time": "2023-10-24T00:00:00",
+        "restaurant": "- El Aljibe",
+        "city": "Santa Cruz",
+        "dish": "Especialidad del chef",
+        "cost": 33,
+        "reservation_type": "RestaurantReservation"
     }
 ]

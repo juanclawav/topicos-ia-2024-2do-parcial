@@ -195,9 +195,157 @@ def generate_trip_summary() -> str:
         return "The trip log file (trip.json) was not found."
     except json.JSONDecodeError:
         return "Error reading the trip log file. It may be corrupted."
+    
+
+
+def generate_itinerary(budget: int, start_date_str: str, days: int) -> dict:
+
+    """
+    Genera un itinerario de viaje basado en un presupuesto y un rango de días.
+    Utiliza las herramientas disponibles, incluyendo `TravelGuideRAG`, para reservar vuelos, buses, hoteles, restaurantes y actividades.
+    
+    Parámetros:
+    - budget: Presupuesto máximo (en dólares).
+    - start_date_str: Fecha de inicio del viaje (string, formato ISO YYYY-MM-DD).
+    - days: Duración del viaje (número de días).
+    
+    Retorno:
+    - itinerary: Diccionario con el itinerario detallado y el costo total.
+    """
+    from datetime import datetime, timedelta
+    from random import randint
+    from llama_index.core.agent import ReActAgent
+    from ai_assistant.agent import TravelAgent
+    from ai_assistant.prompts import agent_prompt_tpl
+    from ai_assistant.tools import travel_guide_tool
+    from ai_assistant.models import AgentAPIResponse
+    from fastapi import FastAPI, Depends, Query
+
+    
+    
+     
+
+    start_date = datetime.fromisoformat(start_date_str)
+    current_budget = budget
+    itinerary = []
+    
+    # Consultar al travel guide para obtener ciudades y recomendaciones
+    agent = ReActAgent.from_tools([travel_guide_tool], verbose=False)
+    prompt = f"Recommend cities to visit in Bolivia, only city names no details, do not suggest La Paz, list them like this: Ciudad:(Name of city)  "
+    travel_guide_response = AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
+   
+    if isinstance(travel_guide_response, AgentAPIResponse):
+            cities_response = travel_guide_response.agent_response
+    # Parsear las ciudades del travel guide
+    cities = extract_cities_from_response(cities_response)
+    
+    if not cities:
+        return {"error": "No se pudieron obtener ciudades del Travel Guide."}
+
+    # Iterar por cada día del itinerario
+    for i in range(days):
+        current_date = start_date + timedelta(days=i)
+        city = cities[i % len(cities)]  # Alternar entre las ciudades obtenidas del travel guide
+
+        # Obtener detalles de la ciudad usando el Travel Guide
+        prompt = f"¿Qué lugares, hoteles y restaurantes recomiendas en {city}? Dame listas en este formato: Hotels: (list of one hotel each line starting in the next line)  Places to Visit: (list of one place each line starting in the next line)  Restaurants: (list of one restaurant each line starting in the next line)"
+        city_details = AgentAPIResponse(status="OK", agent_response=str(agent.chat(prompt)))
+        if isinstance(city_details, AgentAPIResponse):
+            city_details_response = city_details.agent_response
+        
+        # Parsear los detalles obtenidos de la ciudad
+        places_to_visit, hotels, restaurants = extract_details_from_city_response(city_details_response)
+        
+        # Reservar vuelo o bus si es el primer día
+        if i == 0:
+            if current_budget > 200:
+                flight_reservation = reserve_flight(date_str=current_date.strftime('%Y-%m-%d'), departure="La Paz", destination=city)
+                current_budget -= flight_reservation.cost
+                itinerary.append(f"Vuelo hacia {city} el {current_date.strftime('%Y-%m-%d')}, Costo: {flight_reservation.cost}")
+            else:
+                bus_reservation = reserve_bus(date_str=current_date.strftime('%Y-%m-%d'), departure="Oruro", destination=city)
+                current_budget -= bus_reservation.cost
+                itinerary.append(f"Bus hacia {city} el {current_date.strftime('%Y-%m-%d')}, Costo: {bus_reservation.cost}")
+        
+        # Reservar hotel si hay disponibilidad y presupuesto
+        if hotels and current_budget > 100:
+            hotel_name = hotels[0]  # Tomar el primer hotel recomendado
+            hotel_reservation = reserve_hotel(
+                checkin_date_str=current_date.strftime('%Y-%m-%d'), 
+                checkout_date_str=(current_date + timedelta(days=1)).strftime('%Y-%m-%d'),
+                hotel_name=hotel_name, 
+                city=city
+            )
+            current_budget -= hotel_reservation.cost
+            itinerary.append(f"Hotel en {city} ({hotel_name}) del {current_date.strftime('%Y-%m-%d')}, Costo: {hotel_reservation.cost}")
+        
+        # Reservar restaurante si hay disponibilidad y presupuesto
+        if restaurants and current_budget > 20:
+            restaurant_name = restaurants[0]  # Tomar el primer restaurante recomendado
+            restaurant_reservation = reserve_restaurant(
+                reservation_time_str=(current_date + timedelta(hours=20)).strftime('%Y-%m-%d'),
+                restaurant=restaurant_name,
+                city=city,
+                dish="Especialidad del chef"
+            )
+            current_budget -= restaurant_reservation.cost
+            itinerary.append(f"Restaurante en {city} ({restaurant_name}) el {current_date.strftime('%Y-%m-%d')}, Costo: {restaurant_reservation.cost}")
+        
+        # Revisar el presupuesto restante
+        if current_budget < 50:
+            break  # Si el presupuesto restante es menor a 50 USD, detener el itinerario
+    
+    # Retornar el itinerario y el costo total
+    total_cost = budget - current_budget
+    return {
+        "itinerary": itinerary,
+        "total_cost": total_cost,
+        "remaining_budget": current_budget
+    }
+
+def extract_cities_from_response(response: str) -> list:
+    """
+    Extrae las ciudades del TravelGuideRAG response.
+    """
+    # Supongamos que el response es una lista de ciudades
+    cities = []
+    lines = response.splitlines()
+    for line in lines:
+        if "Ciudad" in line:
+            cities.append(line.split(":")[1].strip())
+    return cities
+
+def extract_details_from_city_response(response: str) -> tuple:
+    """
+    Extrae lugares de interés, hoteles y restaurantes del TravelGuideRAG response.
+    """
+    places_to_visit = []
+    hotels = []
+    restaurants = []
+    
+    lines = response.splitlines()
+    current_section = None
+    
+    for line in lines:
+        if "Places to Visit" in line:
+            current_section = "places"
+        elif "Hotels" in line:
+            current_section = "hotels"
+        elif "Restaurants" in line:
+            current_section = "restaurants"
+        elif current_section == "places" and line.strip():
+            places_to_visit.append(line.strip())
+        elif current_section == "hotels" and line.strip():
+            hotels.append(line.strip())
+        elif current_section == "restaurants" and line.strip():
+            restaurants.append(line.strip())
+    
+    return places_to_visit, hotels, restaurants
+
 
 flight_tool = FunctionTool.from_defaults(fn=reserve_flight, return_direct=False)
 bus_tool = FunctionTool.from_defaults(fn=reserve_bus, return_direct=False)
 hotel_tool = FunctionTool.from_defaults(fn=reserve_hotel, return_direct=False)
 restaurant_tool = FunctionTool.from_defaults(fn=reserve_restaurant, return_direct=False)
 trip_summary_tool = FunctionTool.from_defaults(fn=generate_trip_summary, return_direct=False)
+trip_planner_tool = FunctionTool.from_defaults(fn=generate_itinerary, return_direct=False)

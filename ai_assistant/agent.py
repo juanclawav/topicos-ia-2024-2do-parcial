@@ -6,7 +6,8 @@ from ai_assistant.tools import (
     hotel_tool,    # <-- Añadir
     bus_tool,      # <-- Añadir
     restaurant_tool, # <-- Añadir
-    trip_summary_tool
+    trip_summary_tool,
+    trip_planner_tool
 )
 
 
@@ -19,7 +20,8 @@ class TravelAgent:
                 hotel_tool,    # <-- Añadir
                 bus_tool,      # <-- Añadir
                 restaurant_tool,
-                trip_summary_tool 
+                trip_summary_tool,
+                trip_planner_tool
             ],
             verbose=True,
         )

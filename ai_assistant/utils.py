@@ -5,7 +5,7 @@ from ai_assistant.models import (
     RestaurantReservation,
     TripReservation,
     HotelReservation,
-    TripType,
+    TripType
 )
 from ai_assistant.config import get_agent_settings
 

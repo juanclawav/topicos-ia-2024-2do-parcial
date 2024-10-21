@@ -9,6 +9,10 @@ Recomendaciones de lugares a visitar en una ciudad determinada
 Recomendaciones de hoteles y restaurantes
 Reserva de vuelos, hoteles y restaurantes
 Reporte detallado del viaje
+
+### Trip Planner basado en un presupuesto y disponibilidad de tiempo para viajar (en el chatbot)
+Prompt de ejemplo: Mi presupuesto es de 3000, sugiereme un itinerario de viaje desde este viernes que dure 5 dias
+
 ## Endpoints
 ```
 /recommendations/cities: Recomendaciones de lugares a visitar en una ciudad determinada

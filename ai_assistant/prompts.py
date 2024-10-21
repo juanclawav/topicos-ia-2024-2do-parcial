@@ -10,6 +10,7 @@ travel_guide_description = """
 
     """
 
+
 # Prompt for Travel Guide QA
 travel_guide_qa_str = """
     You are an expert travel guide specializing in Bolivia. Your task is to provide personalized travel recommendations and advice to help users plan their trip.
